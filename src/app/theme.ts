@@ -4,10 +4,10 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#f48b2b", // Orange
+      main: "#274032", // Orange
     },
     secondary: {
-      main: "#43226c", // Pink
+      main: "#A7CCCF", // Pink
     },
   },
   cssVariables: true,
