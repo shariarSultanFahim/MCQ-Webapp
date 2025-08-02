@@ -1,37 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MCQ Exam Platform
 
-## Getting Started
+## Project Description
 
-First, run the development server:
+This project aims to develop a simple, web-based MCQ exam platform designed specifically for private tutors in Bangladesh who need an efficient way to conduct tests for their students. The platform will eliminate the hassle of manually administering the same exam multiple times by providing:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Easy test creation & sharing
+2. Automated grading & instant results
+   The system will be user-friendly, lightweight, and cost-effective, ensuring that even tutors with minimal technical knowledge can use it without hassle.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Objective (Main Goal)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The main goal is to automate the examination process for private tutors, saving them time and effort while ensuring fair and consistent evaluations for all students. The platform will:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Simplify test creation & distribution
+2. Automate grading & result generation
+3. Save tutors hours of manual work (printing, checking papers).
+4. Make exams fair (no cheating via randomized questions).
+5. Help students learn better (instant feedback on mistakes).
 
-## Learn More
+## Related Work (Existing System)
 
-To learn more about Next.js, take a look at the following resources:
+Existing platforms like Google Forms, Kahoot!, and Moodle offer quiz features but have limitations:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Too complex for small-scale private tutors.
+2. Lack customization for local education systems (e.g., Bengali language support).
+3. Expensive for individual tutors (many LMS platforms charge per student).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project will bridge these gaps by offering:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# MCQ-Webapp
+1. Simple, intuitive interface (no technical expertise needed).
+2. Affordable pricing (free or low-cost for tutors).
+3. Localized features (Bengali language).
