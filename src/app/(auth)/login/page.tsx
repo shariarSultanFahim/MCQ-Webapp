@@ -67,6 +67,7 @@ export default function LoginPage() {
               value={formData.email}
               onChange={handleInputChange("email")}
               required
+              size="small"
             />
           </div>
           <div>
@@ -80,6 +81,7 @@ export default function LoginPage() {
               value={formData.password}
               onChange={handleInputChange("password")}
               required
+              size="small"
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton

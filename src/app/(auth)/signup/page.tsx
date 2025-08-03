@@ -64,6 +64,7 @@ export default function SignUpPage() {
               fullWidth
               id="outlined-adornment-name"
               type="name"
+              size="small"
               value={formData.name}
               onChange={handleInputChange("name")}
               required
@@ -76,7 +77,8 @@ export default function SignUpPage() {
             <OutlinedInput
               fullWidth
               id="outlined-adornment-phone"
-              type="number"
+              type="text"
+              size="small"
               value={formData.phone}
               onChange={handleInputChange("phone")}
               required
@@ -90,6 +92,7 @@ export default function SignUpPage() {
               fullWidth
               id="outlined-adornment-email"
               type="email"
+              size="small"
               value={formData.email}
               onChange={handleInputChange("email")}
               required
@@ -104,6 +107,7 @@ export default function SignUpPage() {
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
               value={formData.password}
+              size="small"
               onChange={handleInputChange("password")}
               required
               endAdornment={
