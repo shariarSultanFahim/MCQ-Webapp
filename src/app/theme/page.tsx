@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="h-screen p-4 bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB]">
-      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto ">
         <div className="flex-1">
           <h1 className="text-2xl font-bold">MCQ Exam</h1>
         </div>
@@ -99,7 +99,7 @@ export default function Home() {
           </ListItem>
         </div>
       </div>
-      <div className="bg-white container p-6 rounded-xl shadow-md mx-auto mt-10">
+      <div className="container p-6 rounded-xl bg-white/30 shadow-2xl ring-1 ring-black/5 backdrop-blur-3xl mx-auto mt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 mb-4">
             <HugeiconsIcon className="" icon={Time04Icon} />
