@@ -7,6 +7,9 @@ import {
   Button,
   CircularProgress,
   CircularProgressProps,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Pagination,
   Typography,
 } from "@mui/material";
@@ -27,8 +30,13 @@ function CircularProgressWithLabel(
         variant="determinate"
         value={percentage}
         thickness={4}
-        size={80}
-        sx={{ color: "text.primary" }}
+        size={120}
+        sx={{
+          color: "secondary.main",
+          [`& .${props.className}`]: {
+            strokeLinecap: "round",
+          },
+        }}
       />
       <Box
         sx={{
@@ -67,18 +75,31 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen  bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB] ">
-      <div className="flex items-center justify-between  max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold">MCQ Exam</h1>
-        <div className="flex items-center gap-4">
-          <Avatar />
-          <div className="hidden md:flex flex-col">
-            <h1>Name Name</h1>
-            <h1>01234567890</h1>
-          </div>
+    <div className="h-screen p-4 bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB]">
+      <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold">MCQ Exam</h1>
+        </div>
+
+        <div>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar
+                sx={{
+                  bgcolor: "primary.main",
+                }}
+              >
+                IST
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText
+              primary={"Ibrahim Sadik Tamim"}
+              secondary={"01521579148"}
+            />
+          </ListItem>
         </div>
       </div>
-      <div className="bg-white p-6 rounded-xl shadow-md max-w-7xl mx-auto mt-10">
+      <div className="bg-white container p-6 rounded-xl shadow-md mx-auto mt-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4 mb-4">
             <HugeiconsIcon className="" icon={Time04Icon} />

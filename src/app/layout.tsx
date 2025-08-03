@@ -8,6 +8,8 @@ import { ThemeProvider } from "@mui/material";
 
 const funnelDisplay = Funnel_Display({
   variable: "--font-funnel-display",
+  preload: true,
+  weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
 });
 
@@ -23,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${funnelDisplay.variable} antialiased`}>
+      <body className={`${funnelDisplay.variable} !font-sans antialiased`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </AppRouterCacheProvider>
