@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String  @id @default(cuid())
+  email     String  @unique
+  full_name String?
+  phone     String?
+  password  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  exams       Exam[]
+  given_exams AnswerSheet[]
+}
+
+model Exam {
+  id           String   @id @default(cuid())
+  title        String
+  description  String?
+  duration     Int      @default(0) // Duration in minutes
+  passingScore Int      @default(0) // Minimum score to pass the exam
+  isPublished  Boolean  @default(false) // Whether the exam is published and available for users
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+
+  questions    Question[]
+  answersheets AnswerSheet[]
+}
+
+model Question {
+  id      String @id @default(cuid())
+  content String
+
+  options String[] // JSON array of options for multiple-choice questions
+  answer  String? // Correct answer for the question
+
+  marks       Int     @default(1) // Marks for the question
+  isPublished Boolean @default(true) // Whether the question is published and available for exams
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id])
+
+  AnswerSheetQuestionJunction AnswerSheetQuestionJunction[]
+}
+
+model AnswerSheet {
+  id String @id @default(cuid())
+
+  completed_duration Int     @default(0) // Duration taken to complete the exam in seconds
+  score              Int     @default(0) // Score for the exam
+  is_passed          Boolean @default(false) // Whether the exam was passed or not
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id])
+
+  answers AnswerSheetQuestionJunction[]
+}
+
+model AnswerSheetQuestionJunction {
+  id String @id @default(cuid())
+
+  answer String // The answer given by the user for this question
+
+  answerSheetId String
+  answerSheet   AnswerSheet @relation(fields: [answerSheetId], references: [id])
+
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+}
