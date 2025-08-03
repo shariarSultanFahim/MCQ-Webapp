@@ -16,29 +16,31 @@ import {
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
+import Form from "next/form";
+import { useFormStatus } from "react-dom";
+import { signup } from "./action";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      size="large"
+      disabled={pending}
+      className="bg-primary text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+    >
+      Sign Up
+    </Button>
+  );
+}
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    password: "",
-  });
-
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-
-  const handleInputChange =
-    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: event.target.value,
-      }));
-    };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Signuo attempt:", formData);
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -57,16 +59,15 @@ export default function SignUpPage() {
           </Typography>
         </Box>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <Form action={signup} className="space-y-6">
           <div>
             <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
             <OutlinedInput
               fullWidth
               id="outlined-adornment-name"
-              type="name"
+              type="text"
               size="small"
-              value={formData.name}
-              onChange={handleInputChange("name")}
+              name="name"
               required
             />
           </div>
@@ -79,8 +80,7 @@ export default function SignUpPage() {
               id="outlined-adornment-phone"
               type="text"
               size="small"
-              value={formData.phone}
-              onChange={handleInputChange("phone")}
+              name="phone"
               required
             />
           </div>
@@ -93,8 +93,7 @@ export default function SignUpPage() {
               id="outlined-adornment-email"
               type="email"
               size="small"
-              value={formData.email}
-              onChange={handleInputChange("email")}
+              name="email"
               required
             />
           </div>
@@ -106,10 +105,9 @@ export default function SignUpPage() {
               fullWidth
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
-              value={formData.password}
               size="small"
-              onChange={handleInputChange("password")}
               required
+              name="password"
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -127,29 +125,16 @@ export default function SignUpPage() {
               }
             />
           </div>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            size="large"
-            className="bg-primary text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            Sign Up
-          </Button>
-        </form>
+          <SubmitButton />
+        </Form>
 
         <Box className="mt-8 text-center">
-          <Typography variant="body2" className="text-gray-600">
+          <Link href="/login" passHref>
             {"Already have an account? "}
-            <Link href="/login" passHref>
-              <MuiLink
-                component="a"
-                className="!text-blue-600 !font-semibold !no-underline hover:!underline"
-              >
-                Log in
-              </MuiLink>
-            </Link>
-          </Typography>
+            <Typography variant="body2" className="text-gray-600">
+              Log in
+            </Typography>
+          </Link>
         </Box>
       </div>
     </div>
