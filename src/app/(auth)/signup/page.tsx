@@ -17,9 +17,11 @@ import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
     email: "",
     password: "",
   });
@@ -36,7 +38,7 @@ export default function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Login attempt:", formData);
+    console.log("Signuo attempt:", formData);
   };
 
   return (
@@ -48,14 +50,38 @@ export default function LoginPage() {
             component="h1"
             className="font-bold text-gray-800 mb-2"
           >
-            Welcome Back
+            Welcome
           </Typography>
           <Typography variant="body1" className="text-gray-600">
-            Sign in to your account
+            Create new account
           </Typography>
         </Box>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
+            <OutlinedInput
+              fullWidth
+              id="outlined-adornment-name"
+              type="name"
+              value={formData.name}
+              onChange={handleInputChange("name")}
+              required
+            />
+          </div>
+          <div>
+            <InputLabel htmlFor="outlined-adornment-phone">
+              Phone Number
+            </InputLabel>
+            <OutlinedInput
+              fullWidth
+              id="outlined-adornment-phone"
+              type="number"
+              value={formData.phone}
+              onChange={handleInputChange("phone")}
+              required
+            />
+          </div>
           <div>
             <InputLabel htmlFor="outlined-adornment-email">
               Email Address
@@ -97,17 +123,6 @@ export default function LoginPage() {
               }
             />
           </div>
-          <div className="flex justify-end">
-            <Link href="/forgot-password" passHref>
-              <MuiLink
-                component="a"
-                variant="body2"
-                className="text-blue-600 hover:text-blue-800 no-underline hover:underline"
-              >
-                Forgot your password?
-              </MuiLink>
-            </Link>
-          </div>
           <Button
             type="submit"
             fullWidth
@@ -115,19 +130,19 @@ export default function LoginPage() {
             size="large"
             className="bg-primary text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
           >
-            Log In
+            Sign Up
           </Button>
         </form>
 
         <Box className="mt-8 text-center">
           <Typography variant="body2" className="text-gray-600">
-            {"Don't have an account? "}
-            <Link href="/signup" passHref>
+            {"Already have an account? "}
+            <Link href="/login" passHref>
               <MuiLink
                 component="a"
                 className="!text-blue-600 !font-semibold !no-underline hover:!underline"
               >
-                Sign up
+                Log in
               </MuiLink>
             </Link>
           </Typography>
