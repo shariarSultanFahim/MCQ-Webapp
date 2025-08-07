@@ -15,7 +15,7 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
+  id        Int     @id @default(autoincrement())
   email     String  @unique
   full_name String?
   phone     String?
@@ -29,7 +29,7 @@ model User {
 }
 
 model Exam {
-  id           String   @id @default(cuid())
+  id           Int      @id @default(autoincrement())
   title        String
   description  String?
   duration     Int      @default(0) // Duration in minutes
@@ -38,15 +38,15 @@ model Exam {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  ownerId String
-  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId Int
+  owner   User @relation(fields: [ownerId], references: [id])
 
   questions    Question[]
   answersheets AnswerSheet[]
 }
 
 model Question {
-  id      String @id @default(cuid())
+  id      Int    @id @default(autoincrement())
   content String
 
   options String[] // JSON array of options for multiple-choice questions
@@ -58,14 +58,14 @@ model Question {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  examId String
-  exam   Exam   @relation(fields: [examId], references: [id])
+  examId Int
+  exam   Exam @relation(fields: [examId], references: [id])
 
   AnswerSheetQuestionJunction AnswerSheetQuestionJunction[]
 }
 
 model AnswerSheet {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   completed_duration Int     @default(0) // Duration taken to complete the exam in seconds
   score              Int     @default(0) // Score for the exam
@@ -74,23 +74,23 @@ model AnswerSheet {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
 
-  examId String
-  exam   Exam   @relation(fields: [examId], references: [id])
+  examId Int
+  exam   Exam @relation(fields: [examId], references: [id])
 
   answers AnswerSheetQuestionJunction[]
 }
 
 model AnswerSheetQuestionJunction {
-  id String @id @default(cuid())
+  id Int @id @default(autoincrement())
 
   answer String // The answer given by the user for this question
 
-  answerSheetId String
+  answerSheetId Int
   answerSheet   AnswerSheet @relation(fields: [answerSheetId], references: [id])
 
-  questionId String
+  questionId Int
   question   Question @relation(fields: [questionId], references: [id])
 }

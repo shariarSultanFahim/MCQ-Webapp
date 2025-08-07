@@ -9,7 +9,6 @@ import {
   Box,
   InputAdornment,
   IconButton,
-  Link as MuiLink,
   OutlinedInput,
   InputLabel,
 } from "@mui/material";
@@ -67,7 +66,9 @@ export default function SignUpPage() {
               id="outlined-adornment-name"
               type="text"
               size="small"
-              name="name"
+              name="full_name"
+              autoComplete="name"
+              autoFocus
               required
             />
           </div>
