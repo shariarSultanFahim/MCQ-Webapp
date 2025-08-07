@@ -16,28 +16,30 @@ import {
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
+import { useFormStatus } from "react-dom";
+import Form from "next/form";
+import { login } from "./action";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      fullWidth
+      variant="contained"
+      size="large"
+      disabled={pending}
+      className="bg-primary text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
+    >
+      Log In
+    </Button>
+  );
+}
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-
-  const handleInputChange =
-    (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: event.target.value,
-      }));
-    };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Login attempt:", formData);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB] flex items-center justify-center p-4">
@@ -55,7 +57,7 @@ export default function LoginPage() {
           </Typography>
         </Box>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <Form action={login} className="space-y-6">
           <div>
             <InputLabel htmlFor="outlined-adornment-email">
               Email Address
@@ -64,8 +66,7 @@ export default function LoginPage() {
               fullWidth
               id="outlined-adornment-email"
               type="email"
-              value={formData.email}
-              onChange={handleInputChange("email")}
+              name="email"
               required
               size="small"
             />
@@ -78,8 +79,7 @@ export default function LoginPage() {
               fullWidth
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
-              value={formData.password}
-              onChange={handleInputChange("password")}
+              name="password"
               required
               size="small"
               endAdornment={
@@ -110,16 +110,8 @@ export default function LoginPage() {
               </MuiLink>
             </Link>
           </div>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            size="large"
-            className="bg-primary text-white py-3 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            Log In
-          </Button>
-        </form>
+          <SubmitButton />
+        </Form>
 
         <Box className="mt-8 text-center">
           <Typography variant="body2" className="text-gray-600">
