@@ -9,7 +9,6 @@ import {
   Box,
   InputAdornment,
   IconButton,
-  Link as MuiLink,
   OutlinedInput,
   InputLabel,
 } from "@mui/material";
@@ -99,30 +98,18 @@ export default function LoginPage() {
               }
             />
           </div>
-          <div className="flex justify-end">
-            <Link href="/forgot-password" passHref>
-              <MuiLink
-                component="a"
-                variant="body2"
-                className="text-blue-600 hover:text-blue-800 no-underline hover:underline"
-              >
-                Forgot your password?
-              </MuiLink>
-            </Link>
-          </div>
           <SubmitButton />
         </Form>
 
         <Box className="mt-8 text-center">
           <Typography variant="body2" className="text-gray-600">
             {"Don't have an account? "}
-            <Link href="/signup" passHref>
-              <MuiLink
-                component="a"
-                className="!text-blue-600 !font-semibold !no-underline hover:!underline"
-              >
-                Sign up
-              </MuiLink>
+            <Link
+              href="/signup"
+              className="text-primary font-bold hover:underline"
+              passHref
+            >
+              Sign up
             </Link>
           </Typography>
         </Box>

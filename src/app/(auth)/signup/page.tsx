@@ -130,12 +130,16 @@ export default function SignUpPage() {
         </Form>
 
         <Box className="mt-8 text-center">
-          <Link href="/login" passHref>
+          <Typography variant="body2" className="text-gray-600">
             {"Already have an account? "}
-            <Typography variant="body2" className="text-gray-600">
+            <Link
+              href="/login"
+              className="text-primary font-bold hover:underline"
+              passHref
+            >
               Log in
-            </Typography>
-          </Link>
+            </Link>
+          </Typography>
         </Box>
       </div>
     </div>
