@@ -1,3 +1,4 @@
+import { getSession } from "@/lib/session";
 import {
   AppBar,
   Avatar,
@@ -8,12 +9,19 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { redirect, RedirectType } from "next/navigation";
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getSession();
+  if (!user) {
+    // If no user session, redirect to login
+    redirect("/login", RedirectType.replace);
+  }
+
   return (
     <main className="bg-gradient-to-t from-[#afe7ea] to-[#c8f8d4] min-h-screen w-screen overflow-y-auto overflow-x-hidden">
       <header className="grow">
@@ -45,11 +53,14 @@ export default function AppLayout({
                     padding: 2,
                   }}
                 >
-                  IST
+                  {user.full_name
+                    .split(" ")
+                    .map((name: string) => name.charAt(0).toUpperCase())
+                    .join("")}
                 </Avatar>
                 <ListItemText
-                  primary={"Ibrahim Sadik Tamim"}
-                  secondary={"01521579148"}
+                  primary={user.full_name}
+                  secondary={user.email}
                   slotProps={{
                     root: {
                       sx: {

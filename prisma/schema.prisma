@@ -19,7 +19,7 @@ model User {
   email     String  @unique
   full_name String?
   phone     String?
-  password  String?
+  password  String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
