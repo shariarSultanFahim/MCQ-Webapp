@@ -1,8 +1,10 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { redirect, RedirectType } from "next/navigation";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import formatResponse, { formatError } from "@/lib/response";
 
 const prisma = new PrismaClient();
 
@@ -15,7 +17,7 @@ export async function signup(formData: FormData) {
   const password = formData.get("password") as string;
 
   try {
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         full_name,
         phone,
@@ -23,9 +25,9 @@ export async function signup(formData: FormData) {
         password: await bcrypt.hash(password, 10), // Hash the password
       },
     });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    throw new Error("Failed to create user. Please try again.");
+    return formatResponse(user);
+  } catch (error: unknown) {
+    return formatError(error);
   }
-  redirect("/login", RedirectType.replace); // Redirect to login page after successful signup
+  // redirect("/login", RedirectType.replace); // Redirect to login page after successful signup
 }

@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-
+import { PrismaClient } from "@prisma/client";
 function ExamCard() {
   return (
     <Grid size={{ xs: 12, md: 4, sm: 6 }}>
@@ -50,8 +50,11 @@ function ResultCard() {
     </Grid>
   );
 }
+const prisma = new PrismaClient();
+export default async function DashboardPage() {
+  const exams = await prisma.user.findMany({});
+  console.log("Exams:", exams);
 
-export default function DashboardPage() {
   return (
     <section>
       <Accordion

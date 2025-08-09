@@ -18,6 +18,7 @@ import { ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
 import Form from "next/form";
 import { useFormStatus } from "react-dom";
 import { signup } from "./action";
+import { redirect, RedirectType } from "next/navigation";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -42,6 +43,16 @@ export default function SignUpPage() {
     setShowPassword((prev) => !prev);
   };
 
+  const handleSubmit = async (formData: FormData) => {
+    const res = await signup(formData);
+    console.log("Signup response:", res);
+    if (res.success) {
+      redirect("/login", RedirectType.replace);
+    } else {
+      console.error("Signup failed:", res.message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB] flex items-center justify-center p-4">
       <div className="w-full max-w-md p-8 rounded-xl bg-white/10 shadow-2xl ring-1 ring-black/5 backdrop-blur-3xl">
@@ -58,7 +69,7 @@ export default function SignUpPage() {
           </Typography>
         </Box>
 
-        <Form action={signup} className="space-y-6">
+        <Form action={handleSubmit} className="space-y-6">
           <div>
             <InputLabel htmlFor="outlined-adornment-name">Name</InputLabel>
             <OutlinedInput
