@@ -2,6 +2,7 @@ import { getSession } from "@/lib/session";
 import {
   AppBar,
   Avatar,
+  Button,
   Container,
   ListItem,
   ListItemText,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function AppLayout({
   children,
@@ -19,6 +21,12 @@ export default async function AppLayout({
   const user = await getSession();
   if (!user) {
     // If no user session, redirect to login
+    redirect("/login", RedirectType.replace);
+  }
+
+  async function logout() {
+    "use server";
+    (await cookies()).delete("session");
     redirect("/login", RedirectType.replace);
   }
 
@@ -85,10 +93,22 @@ export default async function AppLayout({
                 />
               </ListItem>
             </div>
+
+            {/* Replace onClick with a server action form submit */}
+            <form action={logout}>
+              <Button
+                type="submit"
+                variant="outlined"
+                color="primary"
+                sx={{ ml: 2 }}
+              >
+                Logout
+              </Button>
+            </form>
           </Toolbar>
         </AppBar>
       </header>
-      <Container className="min-h-[87vh]">{children}</Container>
+      <Container className="min-h[87vh]">{children}</Container>
       <footer className="flex sm:hidden justify-center items-center py-4">
         <Typography variant="caption" color="primary">
           Examina © 2025
