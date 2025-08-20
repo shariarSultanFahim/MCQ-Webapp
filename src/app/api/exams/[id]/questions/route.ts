@@ -98,7 +98,7 @@ export async function GET(
     }));
 
     return NextResponse.json({ questions, remainingSeconds });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

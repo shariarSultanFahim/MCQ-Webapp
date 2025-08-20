@@ -1,10 +1,7 @@
 // src/components/QnaSection.tsx
 "use client";
 
-import {
-  ArrowDown01FreeIcons,
-  ArrowUp01FreeIcons,
-} from "@hugeicons/core-free-icons";
+import { ArrowUp01FreeIcons } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Accordion,

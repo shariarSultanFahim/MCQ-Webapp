@@ -67,7 +67,7 @@ export async function POST(
       remainingSeconds,
       hasOngoingAttempt: true,
     });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

@@ -8,12 +8,6 @@ interface ResultPageProps {
   params: Promise<{ id: string }>;
 }
 
-function formatSeconds(total: number) {
-  const m = Math.floor(total / 60);
-  const s = total % 60;
-  return `${m}:${String(s).padStart(2, "0")}`;
-}
-
 export default async function ResultPage({ params }: ResultPageProps) {
   const user = await getSession();
   if (!user?.email) redirect("/dashboard", RedirectType.replace);
@@ -62,17 +56,6 @@ export default async function ResultPage({ params }: ResultPageProps) {
 
   const totalMarks =
     attempt.exam.questions.reduce((acc, q) => acc + (q.marks ?? 1), 0) || 0;
-
-  const correctness = attempt.answers.map((a) => {
-    const isCorrect = a.answer === (a.question.answer ?? null);
-    const marks = a.question.marks ?? 1;
-    return { isCorrect, marks };
-  });
-
-  const earnedMarks = correctness.reduce(
-    (acc, c) => acc + (c.isCorrect ? c.marks : 0),
-    0
-  );
 
   return (
     <section style={{ maxWidth: 960, margin: "24px auto", padding: 16 }}>

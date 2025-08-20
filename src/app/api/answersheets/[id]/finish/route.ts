@@ -96,7 +96,7 @@ export async function POST(
       score: updated.score,
       isPassed: updated.is_passed,
     });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

@@ -71,7 +71,7 @@ export async function POST(
     }
 
     return NextResponse.json({ ok: true });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

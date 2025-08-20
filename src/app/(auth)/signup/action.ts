@@ -1,9 +1,7 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { redirect, RedirectType } from "next/navigation";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { PrismaClient } from "@prisma/client";
 import formatResponse, { formatError } from "@/lib/response";
 
 const prisma = new PrismaClient();

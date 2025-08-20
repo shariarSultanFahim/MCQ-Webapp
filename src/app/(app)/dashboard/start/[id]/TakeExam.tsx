@@ -70,7 +70,6 @@ export default function TakeExam({
       setRemaining((prev) => (prev == null ? null : Math.max(0, prev - 1)));
     }, 1000);
     return () => clearInterval(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [remaining, started, status.isTaken]);
 
   const fetchQuestions = useCallback(

@@ -1,4 +1,6 @@
-export default function formatResponse(data: any) {
+import { error } from "console";
+
+export default function formatResponse<T>(data: T) {
   return {
     success: true,
     data,
@@ -6,7 +8,13 @@ export default function formatResponse(data: any) {
   };
 }
 
-export function formatError(_error: any) {
+interface ErrorResponse {
+  success: false;
+  message: string;
+}
+
+export function formatError(error: unknown): ErrorResponse {
+  console.error(error);
   return {
     success: false,
     message: "An unexpected error occurred.",
