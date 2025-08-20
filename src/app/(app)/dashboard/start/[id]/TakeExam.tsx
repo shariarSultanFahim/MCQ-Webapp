@@ -78,6 +78,14 @@ export default function TakeExam({
         `/api/exams/${exam.id}/questions?attemptId=${attemptId}`,
         { method: "GET" }
       );
+
+      console.log(
+        "Fetching questions for attempt",
+        attemptId,
+        "response:",
+        res
+      );
+
       if (!res.ok) {
         const j = await res.json().catch(() => null);
         throw new Error(j?.message || "Failed to load questions");
@@ -99,6 +107,19 @@ export default function TakeExam({
     },
     [exam.id]
   );
+
+  // Check if we have an ongoing attempt and fetch questions
+  useEffect(() => {
+    if (status.hasOngoingAttempt && status.attemptId != null) {
+      // TODO: Check if we already have attempted exam
+      // const res = await fetchAttempt(examId)
+      // if res is ok
+      // if attempt id? then call the start function automatically
+    } else {
+      setQuestions(null);
+      setRemaining(null);
+    }
+  }, [status.hasOngoingAttempt, status.attemptId, fetchQuestions]);
 
   const handleStart = useCallback(async () => {
     setError(null);

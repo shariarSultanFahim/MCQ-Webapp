@@ -94,8 +94,6 @@ export default async function DashboardPage() {
     "use server";
     const examCode = formData.get("examCode")?.toString()?.trim();
     if (!examCode) return;
-    console.log("Joining exam with code:", examCode);
-    // TODO: lookup exam by code and redirect
     redirect(`/dashboard/start/${examCode}`, RedirectType.replace);
   }
 
