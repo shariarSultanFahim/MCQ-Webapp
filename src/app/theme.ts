@@ -7,10 +7,10 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#274032", // Orange
+      main: "#274032",
     },
     secondary: {
-      main: "#A7CCCF", // Pink
+      main: "#A7CCCF",
     },
   },
   cssVariables: true,

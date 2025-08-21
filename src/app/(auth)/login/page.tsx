@@ -11,6 +11,7 @@ import {
   IconButton,
   OutlinedInput,
   InputLabel,
+  Snackbar,
 } from "@mui/material";
 import Link from "next/link";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -18,6 +19,7 @@ import { ViewIcon, ViewOffSlashIcon } from "@hugeicons/core-free-icons";
 import { useFormStatus } from "react-dom";
 import Form from "next/form";
 import { login } from "./action";
+import { redirect, RedirectType } from "next/navigation";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -39,8 +41,19 @@ function SubmitButton() {
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // TODO: Add a handleSubmit function and avoid using formAction directly for error handling
+  const handleSubmit = async (formData: FormData) => {
+    const res = await login(formData);
+    console.log("Login response:", res);
+    if (res.success) {
+      redirect("/dashboard", RedirectType.replace);
+    } else {
+      setError(res.message);
+      setOpen(true);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-tr from-[#B6DEE3] to-[#F0F7EB] flex items-center justify-center p-4">
@@ -58,7 +71,7 @@ export default function LoginPage() {
           </Typography>
         </Box>
 
-        <Form action={login} className="space-y-6">
+        <Form action={handleSubmit} className="space-y-6">
           <div>
             <InputLabel htmlFor="outlined-adornment-email">
               Email Address
@@ -115,6 +128,14 @@ export default function LoginPage() {
             </Link>
           </Typography>
         </Box>
+      </div>
+      <div>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={open}
+          autoHideDuration={5000}
+          message={error}
+        />
       </div>
     </div>
   );

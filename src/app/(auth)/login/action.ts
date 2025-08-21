@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import { redirect, RedirectType } from "next/navigation";
+import formatResponse, { formatError, loginError } from "@/lib/response";
 
 const prisma = new PrismaClient();
 
@@ -13,39 +13,42 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
 
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-
-  if (!isPasswordValid) {
-    throw new Error("Invalid password");
-  }
-
-  // Set user session
-  const cookieStore = await cookies();
-
-  cookieStore.set(
-    // Set a cookie with user information
-    "session",
-    JSON.stringify({
-      id: user.id,
-      full_name: user.full_name,
-      email: user.email,
-    }),
-    {
-      httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      path: "/",
+    if (!user) {
+      return loginError("User not found");
     }
-  );
 
-  // Redirect
-  redirect("/dashboard", RedirectType.replace);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return loginError("Invalid password");
+    }
+
+    // Set user session
+    const cookieStore = await cookies();
+
+    cookieStore.set(
+      // Set a cookie with user information
+      "session",
+      JSON.stringify({
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+      }),
+      {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        path: "/",
+      }
+    );
+
+    return formatResponse(user);
+  } catch (error: unknown) {
+    return formatError(error);
+  }
 }

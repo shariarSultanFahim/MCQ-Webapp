@@ -10,6 +10,7 @@ import {
 import { PrismaClient } from "@prisma/client";
 import { redirect, RedirectType } from "next/navigation";
 import QuestionsEditor from "./QuestionsEditor";
+import ShareExamButton from "./ShareExamButton";
 
 const prisma = new PrismaClient();
 
@@ -140,9 +141,12 @@ export default async function ExamDetailsPage({ params }: PageProps) {
 
   return (
     <section>
-      <Typography variant="h5" component="h1" className="mb-4">
-        Edit Exam
-      </Typography>
+      <div className="flex justify-between items-center mb-4">
+        <Typography variant="h5" component="h1">
+          Edit Exam
+        </Typography>
+        <ShareExamButton id={exam.id} />
+      </div>
 
       <Card
         elevation={0}

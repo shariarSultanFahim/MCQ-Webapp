@@ -1,5 +1,3 @@
-import { error } from "console";
-
 export default function formatResponse<T>(data: T) {
   return {
     success: true,
@@ -18,5 +16,12 @@ export function formatError(error: unknown): ErrorResponse {
   return {
     success: false,
     message: "An unexpected error occurred.",
+  };
+}
+
+export function loginError(message: string): ErrorResponse {
+  return {
+    success: false,
+    message,
   };
 }

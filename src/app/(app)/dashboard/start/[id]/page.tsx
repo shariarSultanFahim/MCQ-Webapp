@@ -80,7 +80,8 @@ export default async function StartExamPage({ params }: StartExamPageProps) {
       }}
       user={{
         name: userRecord.full_name ?? null,
-        email: userRecord.email ?? null,
+        email: userRecord.email,
+        id: userRecord.id,
       }}
       status={{
         isTaken: isFinished,

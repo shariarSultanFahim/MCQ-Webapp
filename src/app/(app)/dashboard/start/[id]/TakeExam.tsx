@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { checkAttempt } from "./action";
 
 type ExamClientData = {
   id: number;
@@ -33,9 +34,11 @@ type Question = {
 export default function TakeExam({
   exam,
   status: initialStatus,
+  user,
 }: {
   exam: ExamClientData;
   status: Status;
+  user: { id: number; email: string };
 }) {
   const [status, setStatus] = useState<Status>(initialStatus);
   const [questions, setQuestions] = useState<Question[] | null>(null);
@@ -110,16 +113,20 @@ export default function TakeExam({
 
   // Check if we have an ongoing attempt and fetch questions
   useEffect(() => {
-    if (status.hasOngoingAttempt && status.attemptId != null) {
-      // TODO: Check if we already have attempted exam
-      // const res = await fetchAttempt(examId)
-      // if res is ok
-      // if attempt id? then call the start function automatically
-    } else {
-      setQuestions(null);
-      setRemaining(null);
-    }
-  }, [status.hasOngoingAttempt, status.attemptId, fetchQuestions]);
+    const checkAndFetch = async () => {
+      const attempt = await checkAttempt(exam.id, { id: user.id });
+      console.log("attempt", attempt);
+      if (attempt) {
+        if (status.attemptId != null) {
+          fetchQuestions(status.attemptId);
+        }
+      } else {
+        setQuestions(null);
+        setRemaining(null);
+      }
+    };
+    checkAndFetch();
+  }, [exam.id, user.id, status.attemptId, fetchQuestions]);
 
   const handleStart = useCallback(async () => {
     setError(null);
