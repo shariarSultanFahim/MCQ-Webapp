@@ -11,13 +11,14 @@ interface ResultPageProps {
 export default async function ResultPage({ params }: ResultPageProps) {
   const user = await getSession();
   if (!user?.email) redirect("/dashboard", RedirectType.replace);
-
   const { id } = await params; // id = AnswerSheet id
+  const userId = Number.parseInt(user.id, 10);
+  if (!userId) redirect("/dashboard", RedirectType.replace);
   const attemptId = Number.parseInt(id, 10);
   if (!Number.isFinite(attemptId)) redirect("/dashboard", RedirectType.replace);
 
-  const attempt = await prisma.answerSheet.findUnique({
-    where: { id: attemptId },
+  const attempt = await prisma.answerSheet.findFirst({
+    where: { examId: attemptId, userId: userId },
     include: {
       user: { select: { id: true, email: true, full_name: true } },
       exam: {
