@@ -54,5 +54,4 @@ EXPOSE 3000
 
 ENV PORT=3000
 
-# Standard Next.js start command
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
