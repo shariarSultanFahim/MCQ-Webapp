@@ -10,8 +10,13 @@ export default function ShareExamButton({ id }: { id: number }) {
     navigator.clipboard.writeText(`${location.origin}/dashboard/start/${id}`);
   }
   return (
-    <IconButton onClick={share}>
-      <HugeiconsIcon icon={Share01Icon} />
-    </IconButton>
+    <div className="flex justify-between items-center gap-2">
+      <div>
+        <h1>Exam Code: {id}</h1>
+      </div>
+      <IconButton onClick={share}>
+        <HugeiconsIcon icon={Share01Icon} />
+      </IconButton>
+    </div>
   );
 }

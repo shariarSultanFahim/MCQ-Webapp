@@ -7,8 +7,8 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { redirect, RedirectType } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
+import { redirect, RedirectType } from "next/navigation";
 import QuestionsBuilder from "./QuestionsBuilder";
 
 const prisma = new PrismaClient();
@@ -93,7 +93,7 @@ export default async function CreateExamPage() {
       }
     }
 
-    await prisma.exam.create({
+    const newExam = await prisma.exam.create({
       data: {
         title,
         description,
@@ -116,7 +116,7 @@ export default async function CreateExamPage() {
     });
 
     // Optional: redirect after creation
-    redirect("/dashboard", RedirectType.replace);
+    redirect(`/dashboard/exam/${newExam.id}`, RedirectType.replace);
   }
 
   return (

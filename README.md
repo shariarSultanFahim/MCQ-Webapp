@@ -31,3 +31,38 @@ This project will bridge these gaps by offering:
 1. Simple, intuitive interface (no technical expertise needed).
 2. Affordable pricing (free or low-cost for tutors).
 3. Localized features (Bengali language).
+
+## Docker Instructions
+
+To run this application using Docker, follow these steps:
+
+### Prerequisites
+
+- Docker installed on your machine.
+- A `.env` file in the root directory.
+
+### 1. Build the Docker Image
+
+Run the following command in the root directory of the project:
+
+```bash
+docker-compose up -d
+```
+
+### 2. Run Prisma migrations inside the container
+
+Run the following command in the root directory of the project:
+
+```bash
+docker-compose exec app npx prisma migrate deploy
+```
+
+The application will be accessible at `http://localhost:3000`.
+
+### 3. Or If You have Make
+
+Run this command for all available commands:
+
+```bash
+make help
+```

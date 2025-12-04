@@ -9,9 +9,9 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect, RedirectType } from "next/navigation";
-import { cookies } from "next/headers";
 
 export default async function AppLayout({
   children,
@@ -31,7 +31,7 @@ export default async function AppLayout({
   }
 
   return (
-    <main className="bg-gradient-to-t from-[#afe7ea] to-[#c8f8d4] min-h-screen w-screen overflow-y-auto overflow-x-hidden">
+    <main className="bg-gradient-to-t  from-[#afe7ea] to-[#c8f8d4] min-h-screen w-screen overflow-y-auto overflow-x-hidden">
       <header className="grow">
         <AppBar
           sx={{
@@ -41,7 +41,9 @@ export default async function AppLayout({
           position="sticky"
         >
           <Toolbar>
-            <Avatar alt="Logo" src="/logo.svg" variant="rounded" />
+            <Link href="/">
+              <Avatar alt="Logo" src="/logo.svg" variant="rounded" />
+            </Link>
 
             <div className="grow" />
 
@@ -108,7 +110,9 @@ export default async function AppLayout({
           </Toolbar>
         </AppBar>
       </header>
-      <Container className="min-h[87vh]">{children}</Container>
+      <Container className="min-h-[calc(100vh-144px)] overflow-x-hidden">
+        {children}
+      </Container>
       <footer className="flex sm:hidden justify-center items-center py-4">
         <Typography variant="caption" color="primary">
           Examina © 2025
